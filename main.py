@@ -6,6 +6,7 @@ os.environ["QT_LOGGING_RULES"] = "qt.qpa.window=false;qt.qpa.fonts=false"
 
 from PyQt6.QtWidgets import QApplication, QMessageBox
 from PyQt6.QtCore import QThread
+from PyQt6.QtGui import QFontDatabase
 
 # UI Imports
 from core.ui.main_window import MainWindow
@@ -22,6 +23,12 @@ class YotuBoApp:
     def __init__(self):
         try:
             self.app = QApplication(sys.argv)
+
+            # Load Custom Font
+            font_path = os.path.join("assets", "fonts", "Jost-Regular.ttf")
+            if os.path.exists(font_path):
+                QFontDatabase.addApplicationFont(font_path)
+
             self.window = MainWindow()
 
             # 1. Initialize Pages
@@ -35,7 +42,7 @@ class YotuBoApp:
             self.window.add_page(self.settings_page)
 
             # 3. Connect UI Actions
-            self.project_page.start_btn.clicked.connect(self.toggle_automation)
+            # self.project_page.start_btn.clicked.connect(self.toggle_automation)
 
             # Process & Threading
             self.uploader_thread = None
@@ -52,11 +59,11 @@ class YotuBoApp:
             self.start_automation()
 
     def start_automation(self):
-        # Gather Settings from UI
+        # Gather Settings from UI (Placeholder since widgets were removed)
         settings = AppSettings(
-            chrome_user_data_path=self.project_page.chrome_path_input.text(),
-            profile_name=self.project_page.profile_name_input.text(),
-            video_directory=self.project_dir_gather(),
+            chrome_user_data_path="",
+            profile_name="",
+            video_directory="",
             confidence_level=float(self.settings_page.conf_val.text()),
             fail_safe=self.settings_page.fail_safe_cb.isChecked(),
         )
@@ -69,7 +76,7 @@ class YotuBoApp:
             )
             return
 
-        self.project_page.log_area.clear()
+        # self.project_page.log_area.clear()
         self.project_page.log("🚀 Initializing Automation Engine...")
 
         # --- Thread Setup ---
@@ -88,14 +95,14 @@ class YotuBoApp:
         self.uploader_thread.start()
 
         # Update Button State (Stop Style)
-        self.project_page.start_btn.setText("STOP AUTOMATION")
-        self.project_page.start_btn.setStyleSheet(
-            f"background: {THEME_COLORS['DARK_RED']}; color: {THEME_COLORS['SILVER_TEXT']}; border-radius: 8px;"
-        )
+        # self.project_page.start_btn.setText("STOP AUTOMATION")
+        # self.project_page.start_btn.setStyleSheet(
+        #     f"background: {THEME_COLORS['DARK_RED']}; color: {THEME_COLORS['SILVER_TEXT']}; border-radius: 8px;"
+        # )
 
     def project_dir_gather(self):
-        # Helper to get text from project page input
-        return self.project_page.video_dir_input.text()
+        # Placeholder
+        return ""
 
     def stop_automation(self):
         if self.uploader_worker:
@@ -113,10 +120,10 @@ class YotuBoApp:
         QMessageBox.critical(self.window, "Critical Automation Error", msg)
 
     def reset_ui(self):
-        self.project_page.start_btn.setText("START AUTOMATION")
-        self.project_page.start_btn.setStyleSheet(
-            f"background-color: {THEME_COLORS['PRIMARY_RED']}; color: {THEME_COLORS['SILVER_TEXT']}; border-radius: 8px; font-weight: 800;"
-        )
+        # self.project_page.start_btn.setText("START AUTOMATION")
+        # self.project_page.start_btn.setStyleSheet(
+        #     f"background-color: {THEME_COLORS['PRIMARY_RED']}; color: {THEME_COLORS['SILVER_TEXT']}; border-radius: 8px; font-weight: 800;"
+        # )
         self.uploader_thread = None
         self.uploader_worker = None
 

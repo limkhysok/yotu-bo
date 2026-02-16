@@ -3,11 +3,7 @@ from PyQt6.QtWidgets import (
     QVBoxLayout,
     QHBoxLayout,
     QLabel,
-    QLineEdit,
     QPushButton,
-    QTextEdit,
-    QFileDialog,
-    QFrame,
 )
 from PyQt6.QtCore import Qt
 from core.ui.theme import THEME_COLORS
@@ -20,97 +16,39 @@ class ProjectPage(QWidget):
 
     def setup_ui(self):
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(40, 40, 40, 40)
-        layout.setSpacing(25)
+        layout.setContentsMargins(20, 15, 20, 15)
+        layout.setSpacing(10)
+
+        # Header Section
+        header_container = QHBoxLayout()
 
         header = QLabel("Automation Project")
+        header.setStyleSheet("font-size: 20px; font-weight: bold; color: #D32F2F;")
         header.setObjectName("page-header")
-        layout.addWidget(header)
 
-        # Configuration Section
-        config_card = QFrame()
-        config_card.setObjectName("card")
-        config_layout = QVBoxLayout(config_card)
-        config_layout.setSpacing(20)
+        self.create_btn = QPushButton("Create")
+        self.create_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.create_btn.setStyleSheet(f"""
+            QPushButton {{
+                background-color: {THEME_COLORS["PRIMARY_RED"]};
+                color: {THEME_COLORS["SILVER_TEXT"]};
+                padding: 6px 20px;
+                border-radius: 5px;
+                font-weight: bold;
+                font-size: 13px;
+            }}
+            QPushButton:hover {{
+                background-color: {THEME_COLORS["DARK_RED"]};
+            }}
+        """)
 
-        self.chrome_path_input = self.create_input_field(
-            config_layout,
-            "Chrome User Data Path:",
-            "Select your Chrome profile directory",
-        )
-        self.profile_name_input = self.create_input_field(
-            config_layout, "Profile Name:", "e.g., Default or Profile 1", is_dir=False
-        )
-        self.video_dir_input = self.create_input_field(
-            config_layout, "Video Directory:", "Select folder containing MP4 files"
-        )
+        header_container.addWidget(header)
+        header_container.addStretch()
+        header_container.addWidget(self.create_btn)
 
-        layout.addWidget(config_card)
-
-        # Action Button
-        self.start_btn = QPushButton("START AUTOMATION")
-        self.start_btn.setObjectName("primary-btn")
-        self.start_btn.setMinimumHeight(55)
-        self.start_btn.setCursor(Qt.CursorShape.PointingHandCursor)
-        layout.addWidget(self.start_btn)
-
-        # Console Output
-        status_lbl = QLabel("Live Status Console:")
-        status_lbl.setStyleSheet(
-            f"color: {THEME_COLORS['SILVER_METALLIC']}; font-weight: 600;"
-        )
-        layout.addWidget(status_lbl)
-        self.log_area = QTextEdit()
-        self.log_area.setObjectName("console")
-        self.log_area.setReadOnly(True)
-        layout.addWidget(self.log_area)
-
-    def create_input_field(self, parent_layout, label_text, placeholder, is_dir=True):
-        container = QVBoxLayout()
-        container.setSpacing(8)
-
-        lbl = QLabel(label_text)
-        lbl.setStyleSheet(
-            f"color: {THEME_COLORS['SILVER_METALLIC']}; font-size: 14px; font-weight: 600;"
-        )
-        container.addWidget(lbl)
-
-        h_layout = QHBoxLayout()
-        line_edit = QLineEdit()
-        line_edit.setPlaceholderText(placeholder)
-        h_layout.addWidget(line_edit)
-
-        if is_dir:
-            browse_btn = QPushButton("Browse")
-            browse_btn.setCursor(Qt.CursorShape.PointingHandCursor)
-            browse_btn.setFixedWidth(100)
-            browse_btn.setStyleSheet("""
-                QPushButton {
-                    background-color: #1E1E1E;
-                    color: #E0E0E0;
-                    border: 1px solid #4A4A4A;
-                    border-radius: 6px;
-                    padding: 10px;
-                }
-                QPushButton:hover {
-                    background-color: #D32F2F;
-                    color: #E0E0E0;
-                }
-            """)
-            browse_btn.clicked.connect(lambda: self.browse_folder(line_edit))
-            h_layout.addWidget(browse_btn)
-
-        container.addLayout(h_layout)
-        parent_layout.addLayout(container)
-        return line_edit
-
-    def browse_folder(self, target_line_edit):
-        folder = QFileDialog.getExistingDirectory(self, "Select Directory")
-        if folder:
-            target_line_edit.setText(folder)
+        layout.addLayout(header_container)
+        layout.addStretch()
 
     def log(self, message):
-        self.log_area.append(message)
-        self.log_area.verticalScrollBar().setValue(
-            self.log_area.verticalScrollBar().maximum()
-        )
+        # Placeholder for now since log_area is removed
+        print(f"[LOG]: {message}")

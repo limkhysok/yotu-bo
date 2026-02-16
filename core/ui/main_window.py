@@ -3,20 +3,17 @@ from PyQt6.QtWidgets import (
     QWidget,
     QVBoxLayout,
     QHBoxLayout,
-    QPushButton,
-    QFrame,
     QStackedWidget,
 )
-from PyQt6.QtCore import Qt
 from core.ui.layout.navbar import Navbar
+from core.ui.layout.sidebar import Sidebar
 from core.ui.theme import STYLESHEET
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("YotuBo | Professional YouTube Automation")
-        self.setMinimumSize(1100, 800)
+        self.setWindowTitle("YotuBo")
         self.setup_ui()
 
     def setup_ui(self):
@@ -37,26 +34,11 @@ class MainWindow(QMainWindow):
         body_layout = QHBoxLayout()
         body_layout.setSpacing(0)
 
-        # Sidebar
-        self.sidebar = QFrame()
-        self.sidebar.setObjectName("sidebar")
-        side_layout = QVBoxLayout(self.sidebar)
-        side_layout.setContentsMargins(0, 30, 0, 0)
-        side_layout.setSpacing(5)
-
-        self.menu_btns = []
-        menu_items = [("📊 Overview", 0), ("🚀 Project", 1), ("⚙️ Settings", 2)]
-
-        for text, idx in menu_items:
-            btn = QPushButton(text)
-            btn.setObjectName("sidebar-item")
-            btn.setCursor(Qt.CursorShape.PointingHandCursor)
-            btn.clicked.connect(lambda checked, i=idx: self.switch_page(i))
-            side_layout.addWidget(btn)
-            self.menu_btns.append(btn)
-
-        side_layout.addStretch()
+        # Sidebar Component
+        self.sidebar = Sidebar(self)
+        self.sidebar.page_changed.connect(self.switch_page)
         body_layout.addWidget(self.sidebar)
+        body_layout.setContentsMargins(0, 0, 0, 0)
 
         # Content Stack
         self.stack = QStackedWidget()
@@ -69,7 +51,4 @@ class MainWindow(QMainWindow):
 
     def switch_page(self, index):
         self.stack.setCurrentIndex(index)
-        for i, btn in enumerate(self.menu_btns):
-            btn.setProperty("active", "true" if i == index else "false")
-            btn.style().unpolish(btn)
-            btn.style().polish(btn)
+        self.sidebar.set_active_button(index)

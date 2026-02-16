@@ -14,21 +14,18 @@ class Navbar(QFrame):
     def setup_ui(self):
         # Styles moved to theme.py
         layout = QHBoxLayout(self)
-        layout.setContentsMargins(20, 0, 20, 0)
-        layout.setSpacing(15)
+        layout.setContentsMargins(15, 0, 15, 0)
+        layout.setSpacing(5)
 
         # --- Left Side: Logo & Brand ---
         logo_container = QHBoxLayout()
-        self.logo_icon = QLabel("🎬")
-        self.logo_icon.setFont(QFont("Segoe UI Emoji", 24))
 
         self.logo_text = QLabel("YotuBo")
         self.logo_text.setObjectName("logo-text")
         self.logo_text.setStyleSheet(
-            f"font-size: 22px; font-weight: 800; color: {THEME_COLORS['SILVER_TEXT']}; margin-left:10px;"
+            f"font-size: 18px; font-weight: 800; color: {THEME_COLORS['SILVER_TEXT']};"
         )
 
-        logo_container.addWidget(self.logo_icon)
         logo_container.addWidget(self.logo_text)
         layout.addLayout(logo_container)
 

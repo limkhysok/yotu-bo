@@ -6,30 +6,30 @@ STYLESHEET = """
     
     QWidget { 
         color: #E0E0E0; 
-        font-family: 'Inter', system-ui, sans-serif; 
+        font-family: 'Jost', system-ui, sans-serif; 
     }
     
     #navbar {
         background-color: #1E1E1E;
         border-bottom: 1px solid #4A4A4A;
-        min-height: 65px;
-        max-height: 65px;
+        min-height: 40px;
+        max-height: 40px;
     }
     
     #sidebar { 
         background-color: #121212; 
         border-right: 1px solid #4A4A4A; 
-        min-width: 250px; 
-        max-width: 250px; 
+        min-width: 100px; 
+        max-width: 100px; 
     }
     
     QPushButton#sidebar-item { 
         text-align: left; 
-        padding: 16px 25px; 
+        padding: 12px 15px; 
         background: transparent; 
         color: #E0E0E0; 
         border: none; 
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 500;
     }
     
@@ -46,20 +46,20 @@ STYLESHEET = """
     }
     
     #nav-action-btn {
-        background-color: #1E1E1E;
+        background-color: transparent;
         color: #E0E0E0;
-        border: 1px solid #4A4A4A;
-        border-radius: 20px;
+        border: none;
+        border-radius: 17px;
         padding: 0px;
-        min-height: 40px;
-        max-height: 40px;
-        min-width: 40px;
-        max-width: 40px;
+        min-height: 34px;
+        max-height: 34px;
+        min-width: 34px;
+        max-width: 34px;
     }
     
     #nav-action-btn:hover {
         background-color: #8B0000;
-        border-color: #D32F2F;
+        border-radius: 17px;
     }
 
     /* Page Styles */

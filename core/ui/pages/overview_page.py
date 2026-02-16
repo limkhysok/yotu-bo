@@ -9,11 +9,12 @@ class OverviewPage(QWidget):
 
     def setup_ui(self):
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(40, 40, 40, 40)
-        layout.setSpacing(30)
+        layout.setContentsMargins(20, 15, 20, 15)
+        layout.setSpacing(10)
 
         header = QLabel("Dashboard Overview")
         header.setObjectName("page-header")
+        header.setStyleSheet("font-size: 20px; font-weight: bold; color: #D32F2F;")
         layout.addWidget(header)
 
         # Statistics Cards

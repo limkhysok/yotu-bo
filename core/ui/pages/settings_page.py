@@ -18,10 +18,11 @@ class SettingsPage(QWidget):
 
     def setup_ui(self):
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(40, 40, 40, 40)
-        layout.setSpacing(30)
+        layout.setContentsMargins(20, 15, 20, 15)
+        layout.setSpacing(10)
 
         header = QLabel("Global Settings")
+        header.setStyleSheet("font-size: 20px; font-weight: bold; color: #D32F2F;")
         header.setObjectName("page-header")
         layout.addWidget(header)
 

@@ -8,7 +8,7 @@ class CustomIcon(QWidget):
         super().__init__(parent)
         self.icon_type = icon_type
         self.color = QColor(color)
-        self.setFixedSize(24, 24)
+        self.setFixedSize(20, 20)
 
     def paintEvent(self, event):
         painter = QPainter(self)
@@ -20,30 +20,42 @@ class CustomIcon(QWidget):
             self.draw_telegram(painter)
 
     def draw_github(self, painter):
-        # Simplified GitHub Logo Drawing using Paths
+        # Detailed GitHub "Octocat" head silhouette scaled to 20x20
         path = QPainterPath()
-        # Head/Body circle
-        path.addEllipse(QRectF(2, 2, 20, 20))
+
+        # Main Head (Ellipse)
+        path.addEllipse(QRectF(2, 5, 16, 13))
+
+        # Left Ear
+        path.moveTo(4, 6)
+        path.lineTo(3, 1)
+        path.lineTo(8, 5)
+
+        # Right Ear
+        path.moveTo(16, 6)
+        path.lineTo(17, 1)
+        path.lineTo(12, 5)
 
         painter.setPen(Qt.PenStyle.NoPen)
         painter.setBrush(QBrush(self.color))
         painter.drawPath(path)
 
         # Eyes (cutouts)
-        painter.setBrush(QBrush(QColor("#1A1A1A")))
-        painter.drawEllipse(QRectF(7, 8, 3, 3))
-        painter.drawEllipse(QRectF(14, 8, 3, 3))
+        # Using a dark surfacing color that matches our BASE_BLACK for better visibility
+        painter.setBrush(QBrush(QColor("#121212")))
+        painter.drawEllipse(QRectF(6, 10, 2.5, 2.5))
+        painter.drawEllipse(QRectF(11.5, 10, 2.5, 2.5))
 
     def draw_telegram(self, painter):
-        # Telegram Paper Plane Logo
+        # Telegram Paper Plane Logo scaled to 20x20
         path = QPainterPath()
-        path.moveTo(20, 4)
-        path.lineTo(4, 11)
-        path.lineTo(9, 14)
-        path.lineTo(9, 20)
-        path.lineTo(12, 16)
-        path.lineTo(16, 20)
-        path.lineTo(20, 4)
+        path.moveTo(18, 2)
+        path.lineTo(2, 9)
+        path.lineTo(7, 12)
+        path.lineTo(7, 18)
+        path.lineTo(10, 14)
+        path.lineTo(14, 18)
+        path.lineTo(18, 2)
         path.closeSubpath()
 
         painter.setPen(Qt.PenStyle.NoPen)
