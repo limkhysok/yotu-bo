@@ -157,5 +157,6 @@ cython_debug/
 logs/
 uploads/
 assets/screenshots/
+data/
 *.log
 !README.md
