@@ -10,7 +10,7 @@ from PyQt6.QtWidgets import (
     QFrame,
 )
 from PyQt6.QtCore import Qt
-from core.ui.theme import COLORS
+from core.ui.theme import THEME_COLORS
 
 
 class ProjectPage(QWidget):
@@ -56,7 +56,9 @@ class ProjectPage(QWidget):
 
         # Console Output
         status_lbl = QLabel("Live Status Console:")
-        status_lbl.setStyleSheet(f"color: {COLORS['text_dim']}; font-weight: 600;")
+        status_lbl.setStyleSheet(
+            f"color: {THEME_COLORS['SILVER_METALLIC']}; font-weight: 600;"
+        )
         layout.addWidget(status_lbl)
         self.log_area = QTextEdit()
         self.log_area.setObjectName("console")
@@ -68,25 +70,14 @@ class ProjectPage(QWidget):
         container.setSpacing(8)
 
         lbl = QLabel(label_text)
-        lbl.setStyleSheet("color: #AAAAAA; font-size: 14px; font-weight: 600;")
+        lbl.setStyleSheet(
+            f"color: {THEME_COLORS['SILVER_METALLIC']}; font-size: 14px; font-weight: 600;"
+        )
         container.addWidget(lbl)
 
         h_layout = QHBoxLayout()
         line_edit = QLineEdit()
         line_edit.setPlaceholderText(placeholder)
-        line_edit.setStyleSheet("""
-            QLineEdit {
-                background-color: #121212;
-                border: 1px solid #333;
-                border-radius: 6px;
-                padding: 12px;
-                color: #FFFFFF;
-                font-size: 14px;
-            }
-            QLineEdit:focus {
-                border-color: #3EA6FF;
-            }
-        """)
         h_layout.addWidget(line_edit)
 
         if is_dir:
@@ -95,13 +86,15 @@ class ProjectPage(QWidget):
             browse_btn.setFixedWidth(100)
             browse_btn.setStyleSheet("""
                 QPushButton {
-                    background-color: #333333;
-                    color: white;
+                    background-color: #1E1E1E;
+                    color: #E0E0E0;
+                    border: 1px solid #4A4A4A;
                     border-radius: 6px;
                     padding: 10px;
                 }
                 QPushButton:hover {
-                    background-color: #444444;
+                    background-color: #D32F2F;
+                    color: #E0E0E0;
                 }
             """)
             browse_btn.clicked.connect(lambda: self.browse_folder(line_edit))

@@ -1,13 +1,14 @@
 from PyQt6.QtWidgets import (
     QWidget,
-    QVBoxLayout,
     QLabel,
     QFrame,
+    QVBoxLayout,
     QCheckBox,
     QSlider,
     QHBoxLayout,
 )
 from PyQt6.QtCore import Qt
+from core.ui.theme import THEME_COLORS
 
 
 class SettingsPage(QWidget):
@@ -21,7 +22,7 @@ class SettingsPage(QWidget):
         layout.setSpacing(30)
 
         header = QLabel("Global Settings")
-        header.setStyleSheet("font-size: 28px; font-weight: bold; color: #FFFFFF;")
+        header.setObjectName("page-header")
         layout.addWidget(header)
 
         # Automation Settings
@@ -32,11 +33,15 @@ class SettingsPage(QWidget):
             "Enable PyAutoGUI Fail-Safe (Mouse to corner stops app)"
         )
         self.fail_safe_cb.setChecked(True)
-        self.fail_safe_cb.setStyleSheet("color: #DDD; font-size: 14px;")
+        self.fail_safe_cb.setStyleSheet(
+            f"color: {THEME_COLORS['SILVER_TEXT']}; font-size: 14px;"
+        )
 
         self.human_delay_cb = QCheckBox("Simulate Human-Like Typing Delays")
         self.human_delay_cb.setChecked(True)
-        self.human_delay_cb.setStyleSheet("color: #DDD; font-size: 14px;")
+        self.human_delay_cb.setStyleSheet(
+            f"color: {THEME_COLORS['SILVER_TEXT']}; font-size: 14px;"
+        )
 
         auto_layout.addWidget(self.fail_safe_cb)
         auto_layout.addWidget(self.human_delay_cb)
@@ -48,9 +53,13 @@ class SettingsPage(QWidget):
 
         conf_label_box = QHBoxLayout()
         conf_label = QLabel("Detection Confidence Score")
-        conf_label.setStyleSheet("color: #DDD; font-size: 14px;")
+        conf_label.setStyleSheet(
+            f"color: {THEME_COLORS['SILVER_TEXT']}; font-size: 14px;"
+        )
         self.conf_val = QLabel("0.8")
-        self.conf_val.setStyleSheet("color: #3EA6FF; font-weight: bold;")
+        self.conf_val.setStyleSheet(
+            f"color: {THEME_COLORS['PRIMARY_RED']}; font-weight: bold;"
+        )
         conf_label_box.addWidget(conf_label)
         conf_label_box.addStretch()
         conf_label_box.addWidget(self.conf_val)
@@ -70,19 +79,12 @@ class SettingsPage(QWidget):
 
     def create_section(self, title):
         frame = QFrame()
-        frame.setStyleSheet("""
-            QFrame {
-                background-color: #1A1A1A;
-                border: 1px solid #333;
-                border-radius: 12px;
-                padding: 20px;
-            }
-        """)
+        frame.setObjectName("card")
         layout = QVBoxLayout(frame)
 
         lbl = QLabel(title)
         lbl.setStyleSheet(
-            "font-size: 18px; font-weight: 600; color: #3EA6FF; margin-bottom: 15px;"
+            f"font-size: 18px; font-weight: 600; color: {THEME_COLORS['PRIMARY_RED']}; margin-bottom: 15px;"
         )
         layout.addWidget(lbl)
 

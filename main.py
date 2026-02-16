@@ -13,7 +13,7 @@ from core.ui.pages.overview_page import OverviewPage
 from core.ui.pages.project_page import ProjectPage
 from core.ui.pages.settings_page import SettingsPage
 
-# Logic & Models
+from core.ui.theme import THEME_COLORS
 from core.services.uploader import UploaderService
 from core.models.settings import AppSettings
 
@@ -87,10 +87,10 @@ class YotuBoApp:
 
         self.uploader_thread.start()
 
-        # Update Button State
+        # Update Button State (Stop Style)
         self.project_page.start_btn.setText("STOP AUTOMATION")
         self.project_page.start_btn.setStyleSheet(
-            "background: #CF6679; color: white; border-radius: 8px;"
+            f"background: {THEME_COLORS['DARK_RED']}; color: {THEME_COLORS['SILVER_TEXT']}; border-radius: 8px;"
         )
 
     def project_dir_gather(self):
@@ -115,7 +115,7 @@ class YotuBoApp:
     def reset_ui(self):
         self.project_page.start_btn.setText("START AUTOMATION")
         self.project_page.start_btn.setStyleSheet(
-            "background: #3EA6FF; color: #0F0F0F; border-radius: 8px; font-weight: 800;"
+            f"background-color: {THEME_COLORS['PRIMARY_RED']}; color: {THEME_COLORS['SILVER_TEXT']}; border-radius: 8px; font-weight: 800;"
         )
         self.uploader_thread = None
         self.uploader_worker = None

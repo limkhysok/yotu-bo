@@ -2,7 +2,7 @@ from PyQt6.QtWidgets import QFrame, QHBoxLayout, QLabel, QPushButton
 from PyQt6.QtCore import Qt, QUrl
 from PyQt6.QtGui import QFont, QDesktopServices
 from core.ui.views.custom_icons import CustomIcon
-from core.ui.theme import COLORS
+from core.ui.theme import THEME_COLORS
 
 
 class Navbar(QFrame):
@@ -25,7 +25,7 @@ class Navbar(QFrame):
         self.logo_text = QLabel("YotuBo")
         self.logo_text.setObjectName("logo-text")
         self.logo_text.setStyleSheet(
-            f"font-size: 22px; font-weight: 800; color: {COLORS['text']}; margin-left:10px;"
+            f"font-size: 22px; font-weight: 800; color: {THEME_COLORS['SILVER_TEXT']}; margin-left:10px;"
         )
 
         logo_container.addWidget(self.logo_icon)
@@ -42,7 +42,7 @@ class Navbar(QFrame):
 
         gh_layout = QHBoxLayout(self.github_btn)
         gh_layout.setContentsMargins(0, 0, 0, 0)
-        self.gh_icon = CustomIcon("github", COLORS["text"])
+        self.gh_icon = CustomIcon("github", THEME_COLORS["SILVER_TEXT"])
         gh_layout.addWidget(self.gh_icon, alignment=Qt.AlignmentFlag.AlignCenter)
         self.github_btn.clicked.connect(
             lambda: QDesktopServices.openUrl(QUrl("https://github.com/your-repo"))
@@ -55,7 +55,7 @@ class Navbar(QFrame):
 
         tg_layout = QHBoxLayout(self.telegram_btn)
         tg_layout.setContentsMargins(0, 0, 0, 0)
-        self.tg_icon = CustomIcon("telegram", COLORS["text"])
+        self.tg_icon = CustomIcon("telegram", THEME_COLORS["SILVER_TEXT"])
         tg_layout.addWidget(self.tg_icon, alignment=Qt.AlignmentFlag.AlignCenter)
         self.telegram_btn.clicked.connect(
             lambda: QDesktopServices.openUrl(QUrl("https://t.me/your-channel"))

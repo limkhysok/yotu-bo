@@ -1,4 +1,5 @@
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QFrame
+from core.ui.theme import THEME_COLORS
 
 
 class OverviewPage(QWidget):
@@ -12,7 +13,7 @@ class OverviewPage(QWidget):
         layout.setSpacing(30)
 
         header = QLabel("Dashboard Overview")
-        header.setStyleSheet("font-size: 28px; font-weight: bold; color: #FFFFFF;")
+        header.setObjectName("page-header")
         layout.addWidget(header)
 
         # Statistics Cards
@@ -20,9 +21,9 @@ class OverviewPage(QWidget):
         stats_layout.setSpacing(20)
 
         stats = [
-            ("Total Videos", "42", "#3EA6FF"),
-            ("Hours Saved", "12.5", "#03DAC6"),
-            ("Success Rate", "98%", "#BB86FC"),
+            ("Total Videos", "42", THEME_COLORS["PRIMARY_RED"]),
+            ("Hours Saved", "12.5", THEME_COLORS["SILVER_METALLIC"]),
+            ("Success Rate", "98%", THEME_COLORS["SILVER_METALLIC"]),
         ]
 
         for label, value, color in stats:
@@ -33,19 +34,12 @@ class OverviewPage(QWidget):
 
         # Activity Feed Placeholder
         activity_section = QFrame()
-        activity_section.setStyleSheet("""
-            QFrame {
-                background-color: #1A1A1A;
-                border: 1px solid #333;
-                border-radius: 12px;
-                padding: 20px;
-            }
-        """)
+        activity_section.setObjectName("card")
         activity_layout = QVBoxLayout(activity_section)
 
         feed_header = QLabel("Recent Activity")
         feed_header.setStyleSheet(
-            "font-size: 18px; font-weight: 600; color: #FFFFFF; margin-bottom: 10px;"
+            f"font-size: 18px; font-weight: 600; color: {THEME_COLORS['PRIMARY_RED']}; margin-bottom: 10px;"
         )
         activity_layout.addWidget(feed_header)
 
@@ -56,7 +50,9 @@ class OverviewPage(QWidget):
             "Settings updated",
         ]:
             feed_item = QLabel(f"• {item}")
-            feed_item.setStyleSheet("color: #AAAAAA; font-size: 14px; padding: 5px 0;")
+            feed_item.setStyleSheet(
+                f"color: {THEME_COLORS['SILVER_TEXT']}; font-size: 14px; padding: 5px 0;"
+            )
             activity_layout.addWidget(feed_item)
 
         layout.addWidget(activity_section)
@@ -64,19 +60,14 @@ class OverviewPage(QWidget):
 
     def create_stat_card(self, label, value, color):
         card = QFrame()
-        card.setStyleSheet("""
-            QFrame {
-                background-color: #1A1A1A;
-                border: 1px solid #333;
-                border-radius: 12px;
-                padding: 25px;
-            }
-        """)
+        card.setObjectName("card")
         vbox = QVBoxLayout(card)
         vbox.setSpacing(10)
 
         lbl = QLabel(label)
-        lbl.setStyleSheet("color: #AAAAAA; font-size: 14px; font-weight: 600;")
+        lbl.setStyleSheet(
+            f"color: {THEME_COLORS['SILVER_METALLIC']}; font-size: 14px; font-weight: 600;"
+        )
 
         val = QLabel(value)
         val.setStyleSheet(f"color: {color}; font-size: 32px; font-weight: 800;")

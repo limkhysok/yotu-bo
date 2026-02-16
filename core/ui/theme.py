@@ -1,24 +1,24 @@
 # Global Style Constants
 STYLESHEET = """
     QMainWindow { 
-        background-color: #0F0F0F; 
+        background-color: #121212; 
     }
     
     QWidget { 
-        color: #F1F1F1; 
+        color: #E0E0E0; 
         font-family: 'Inter', system-ui, sans-serif; 
     }
     
     #navbar {
-        background-color: #1A1A1A;
-        border-bottom: 1px solid #333;
+        background-color: #1E1E1E;
+        border-bottom: 1px solid #4A4A4A;
         min-height: 65px;
         max-height: 65px;
     }
     
     #sidebar { 
         background-color: #121212; 
-        border-right: 1px solid #333; 
+        border-right: 1px solid #4A4A4A; 
         min-width: 250px; 
         max-width: 250px; 
     }
@@ -27,28 +27,28 @@ STYLESHEET = """
         text-align: left; 
         padding: 16px 25px; 
         background: transparent; 
-        color: #AAAAAA; 
+        color: #E0E0E0; 
         border: none; 
         font-size: 15px;
         font-weight: 500;
     }
     
     QPushButton#sidebar-item:hover { 
-        background: #252525; 
-        color: #FFFFFF; 
+        background: #1E1E1E; 
+        color: #D32F2F; 
     }
     
     QPushButton#sidebar-item[active="true"] { 
-        background: #2D2D2D; 
-        color: #3EA6FF; 
-        border-left: 4px solid #3EA6FF;
+        background: #1E1E1E; 
+        color: #D32F2F; 
+        border-left: 4px solid #D32F2F;
         font-weight: 700;
     }
     
     #nav-action-btn {
-        background-color: #2A2A2A;
-        color: #FFFFFF;
-        border: 1px solid #333;
+        background-color: #1E1E1E;
+        color: #E0E0E0;
+        border: 1px solid #4A4A4A;
         border-radius: 20px;
         padding: 0px;
         min-height: 40px;
@@ -58,66 +58,66 @@ STYLESHEET = """
     }
     
     #nav-action-btn:hover {
-        background-color: #333;
-        border-color: #3EA6FF;
+        background-color: #8B0000;
+        border-color: #D32F2F;
     }
 
     /* Page Styles */
     QLabel#page-header {
         font-size: 28px; 
         font-weight: bold; 
-        color: #FFFFFF;
+        color: #D32F2F;
     }
     
     QFrame#card {
-        background-color: #1A1A1A;
-        border: 1px solid #333;
+        background-color: #1E1E1E;
+        border: 1px solid #4A4A4A;
         border-radius: 12px;
         padding: 20px;
     }
 
     QLineEdit {
         background-color: #121212;
-        border: 1px solid #333;
+        border: 1px solid #4A4A4A;
         border-radius: 6px;
         padding: 12px;
-        color: #FFFFFF;
+        color: #E0E0E0;
         font-size: 14px;
     }
     
     QLineEdit:focus {
-        border-color: #3EA6FF;
+        border-color: #D32F2F;
     }
     
     QPushButton#primary-btn {
-        background-color: #3EA6FF;
-        color: #0F0F0F;
+        background-color: #D32F2F;
+        color: #E0E0E0;
         border-radius: 8px;
         font-size: 16px;
         font-weight: 800;
     }
     
     QPushButton#primary-btn:hover {
-        background-color: #65B8FF;
+        background-color: #8B0000;
     }
 
     QTextEdit#console {
         background-color: #000000;
-        border: 1px solid #333;
+        border: 1px solid #4A4A4A;
         border-radius: 10px;
-        color: #00FF41;
+        color: #D32F2F;
         font-family: 'Consolas', monospace;
         font-size: 13px;
         padding: 15px;
     }
 """
 
-COLORS = {
-    "primary": "#3EA6FF",
-    "background": "#0F0F0F",
-    "surface": "#1A1A1A",
-    "text": "#F1F1F1",
-    "text_dim": "#AAAAAA",
-    "error": "#CF6679",
-    "success": "#03DAC6",
+THEME_COLORS = {
+    "PRIMARY_RED": "#D32F2F",  # Aggressive highlight
+    "DARK_RED": "#8B0000",  # Hover/Pressed state
+    "BASE_BLACK": "#121212",  # Main background
+    "SURFACE_BLACK": "#1E1E1E",  # Card/Container background
+    "SILVER_TEXT": "#E0E0E0",  # Primary text
+    "SILVER_BORDER": "#4A4A4A",  # Subtle borders
+    "SILVER_METALLIC": "#C0C0C0",  # Highlights/Icons
 }
