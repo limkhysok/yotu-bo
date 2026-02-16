@@ -5,21 +5,23 @@ from datetime import datetime
 
 @dataclass
 class Task:
-    name: str
-    chrome_path: str
-    video_dir: str
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
-    profile_name: str = "Default"
+    task_name: str
+    chrome_path: str
+    youtube_url: str
+    video_directory: str
+    post_video: int = 1  # default is 1 video per task
     created_at: str = field(default_factory=lambda: datetime.now().isoformat())
     status: str = "Idle"
 
     def to_dict(self):
         return {
             "id": self.id,
-            "name": self.name,
+            "task_name": self.task_name,
             "chrome_path": self.chrome_path,
-            "video_dir": self.video_dir,
-            "profile_name": self.profile_name,
+            "youtube_url": self.youtube_url,
+            "video_directory": self.video_directory,
+            "post_video": self.post_video,
             "created_at": self.created_at,
             "status": self.status,
         }
