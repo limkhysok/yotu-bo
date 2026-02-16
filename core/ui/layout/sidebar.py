@@ -16,7 +16,7 @@ class Sidebar(QFrame):
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(1)
 
-        menu_items = [("Overview", 0), ("Project", 1), ("Settings", 2)]
+        menu_items = [("Overview", 0), ("Tasks", 1), ("Settings", 2)]
 
         for text, idx in menu_items:
             btn = QPushButton(text)

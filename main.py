@@ -11,10 +11,10 @@ from PyQt6.QtGui import QFontDatabase
 # UI Imports
 from core.ui.main_window import MainWindow
 from core.ui.pages.overview_page import OverviewPage
-from core.ui.pages.project_page import ProjectPage
+from core.ui.pages.task_page import TaskPage
 from core.ui.pages.settings_page import SettingsPage
 
-from core.ui.theme import THEME_COLORS
+
 from core.services.uploader import UploaderService
 from core.models.settings import AppSettings
 
@@ -33,16 +33,16 @@ class YotuBoApp:
 
             # 1. Initialize Pages
             self.overview_page = OverviewPage()
-            self.project_page = ProjectPage()
+            self.task_page = TaskPage()
             self.settings_page = SettingsPage()
 
             # 2. Add to Main Window Stack
             self.window.add_page(self.overview_page)
-            self.window.add_page(self.project_page)
+            self.window.add_page(self.task_page)
             self.window.add_page(self.settings_page)
 
             # 3. Connect UI Actions
-            # self.project_page.start_btn.clicked.connect(self.toggle_automation)
+            # self.task_page.start_btn.clicked.connect(self.toggle_automation)
 
             # Process & Threading
             self.uploader_thread = None
@@ -72,12 +72,12 @@ class YotuBoApp:
             QMessageBox.warning(
                 self.window,
                 "Configuration Error",
-                "Please provide all required directory paths in the Project tab.",
+                "Please provide all required directory paths in the Tasks tab.",
             )
             return
 
-        # self.project_page.log_area.clear()
-        self.project_page.log("🚀 Initializing Automation Engine...")
+        # self.task_page.log_area.clear()
+        self.task_page.log("🚀 Initializing Automation Engine...")
 
         # --- Thread Setup ---
         self.uploader_thread = QThread()
@@ -85,7 +85,7 @@ class YotuBoApp:
         self.uploader_worker.moveToThread(self.uploader_thread)
 
         self.uploader_thread.started.connect(self.uploader_worker.run)
-        self.uploader_worker.status_signal.connect(self.project_page.log)
+        self.uploader_worker.status_signal.connect(self.task_page.log)
         self.uploader_worker.finished_signal.connect(self.on_finished)
         self.uploader_worker.error_signal.connect(self.on_error)
 
@@ -95,19 +95,19 @@ class YotuBoApp:
         self.uploader_thread.start()
 
         # Update Button State (Stop Style)
-        # self.project_page.start_btn.setText("STOP AUTOMATION")
-        # self.project_page.start_btn.setStyleSheet(
+        # self.task_page.start_btn.setText("STOP AUTOMATION")
+        # self.task_page.start_btn.setStyleSheet(
         #     f"background: {THEME_COLORS['DARK_RED']}; color: {THEME_COLORS['SILVER_TEXT']}; border-radius: 8px;"
         # )
 
-    def project_dir_gather(self):
+    def task_dir_gather(self):
         # Placeholder
         return ""
 
     def stop_automation(self):
         if self.uploader_worker:
             self.uploader_worker.stop()
-            self.project_page.log("🛑 Sending stop signal to agent...")
+            self.task_page.log("🛑 Sending stop signal to agent...")
 
     def on_finished(self):
         self.reset_ui()
@@ -120,8 +120,8 @@ class YotuBoApp:
         QMessageBox.critical(self.window, "Critical Automation Error", msg)
 
     def reset_ui(self):
-        # self.project_page.start_btn.setText("START AUTOMATION")
-        # self.project_page.start_btn.setStyleSheet(
+        # self.task_page.start_btn.setText("START AUTOMATION")
+        # self.task_page.start_btn.setStyleSheet(
         #     f"background-color: {THEME_COLORS['PRIMARY_RED']}; color: {THEME_COLORS['SILVER_TEXT']}; border-radius: 8px; font-weight: 800;"
         # )
         self.uploader_thread = None

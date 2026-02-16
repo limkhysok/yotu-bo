@@ -9,7 +9,7 @@ from PyQt6.QtCore import Qt
 from core.ui.theme import THEME_COLORS
 
 
-class ProjectPage(QWidget):
+class TaskPage(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setup_ui()
@@ -22,7 +22,7 @@ class ProjectPage(QWidget):
         # Header Section
         header_container = QHBoxLayout()
 
-        header = QLabel("Automation Project")
+        header = QLabel("Tasks")
         header.setStyleSheet("font-size: 20px; font-weight: bold; color: #D32F2F;")
         header.setObjectName("page-header")
 
@@ -50,5 +50,4 @@ class ProjectPage(QWidget):
         layout.addStretch()
 
     def log(self, message):
-        # Placeholder for now since log_area is removed
         print(f"[LOG]: {message}")
