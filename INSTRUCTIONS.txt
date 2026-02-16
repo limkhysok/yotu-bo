@@ -1,14 +1,62 @@
-# 📥 Project: yotu-bo (Vision-Based YT Uploader)
+# 🤖 AI Agent Instructions: Project "yotu-bo"
 
-## 📌 Project Overview
-"yotu-bo" is a desktop automation tool built with Python. It uses PyQt6 for the user interface and PyAutoGUI for vision-based automation. The goal is to automate video uploads to YouTube by mimicking human mouse clicks and keyboard inputs, utilizing existing Google Chrome profiles to bypass API quota restrictions.
+## 🎯 Task Goal
+Automate the YouTube video upload process via a **Vision-Guided GUI Agent**. The agent must use **PyAutoGUI** to see the screen and **PyQt6** to receive user configurations.
 
-## 🛠 Required Environment (requirements.txt)
-```text
-PyQt6==6.7.1
-selenium==4.25.0
-webdriver-manager==4.0.2
-pyautogui==0.9.54
-opencv-python==4.10.0.84
-Pillow==10.4.0
-pyperclip==1.9.0
+---
+
+## 🛠 Step 1: Environment & Setup
+1. **Packages**: Use `PyQt6` (UI), `Selenium` (Chrome Launch), `PyAutoGUI` (Vision), and `OpenCV` (Detection).
+2. **Safety**: Always set `pyautogui.FAILSAFE = True`.
+3. **Detection**: Use `confidence=0.8` for all image searches to ensure reliability across different screen scales.
+
+---
+
+## 🖥 Step 2: User Inputs (PyQt6 UI)
+The agent must build a dashboard that collects:
+- **Chrome Data Path**: Path to `User Data` folder.
+- **Profile Name**: Specific profile string (e.g., `Default` or `Profile 2`).
+- **Video Directory**: Local folder containing the `.mp4` files.
+- **Console Log**: A text area to show "Status: Detecting button...", "Status: Uploading...", etc.
+
+---
+
+## 🌐 Step 3: Browser Initiation
+1. **Kill Chrome**: Ensure all existing Chrome instances are closed to avoid "Profile in use" errors.
+2. **Selenium Setup**: Launch Chrome with `--user-data-dir` and `--profile-directory`.
+3. **URL**: Load `https://www.youtube.com` directly.
+
+---
+
+## 👁 Step 4: Vision Automation Loop (Per Video)
+For each video file in the target folder, the Agent must perform these **Vision-Steps**:
+
+1. **The Trigger**: 
+   - Search for `assets/upload_icon.png`. 
+   - Once found, click the center.
+2. **The File Dialog**: 
+   - Wait for the Windows/Mac File Explorer popup.
+   - Use `pyperclip` to copy the video's absolute path.
+   - Use `ctrl + v` and `enter` to submit the file.
+3. **The Metadata**:
+   - Wait for the `Title` input box to appear on screen.
+   - Type the video filename.
+   - Locate and click the "No, it's not made for kids" checkbox via image detection.
+4. **The Navigation**:
+   - Locate the `Next` button. Click it 3 times (for Details, Checks, and Video Elements).
+5. **The Visibility**:
+   - Locate the `Public` radio button image. Click it.
+   - Locate and click the final `Publish` button image.
+6. **The Confirmation**:
+   - **Crucial**: Do not move to the next video until the "Upload Complete" or "Video Published" image is detected.
+
+---
+
+## 🛠 Step 5: Error Handling
+- **Image Not Found**: If a button is not found within 30 seconds, pause the script and alert the user via the PyQt6 UI.
+- **Randomization**: Add `random.uniform(1.5, 4.0)` delays between clicks to mimic human behavior.
+
+---
+
+## 📝 Usage for AI Agent
+> "Read the logic above. Build the `main.py` using PyQt6 for the UI and `automation.py` for the PyAutoGUI logic. Ensure the two scripts communicate so the UI updates with the status of the vision agent."

@@ -1,0 +1,21 @@
+# --- GUI Framework ---
+PyQt6==6.7.1
+PyQt6-Qt6==6.7.2
+PyQt6-sip==13.8.0
+
+# --- Browser Management ---
+# To launch Chrome with your specific User Profile
+selenium==4.25.0
+webdriver-manager==4.0.2
+
+# --- Vision & Image Automation ---
+# Finds your screenshots on the screen and clicks them
+pyautogui==0.9.54
+# Required for high-speed image recognition accuracy
+opencv-python==4.10.0.84
+# Handles image processing and screenshot management
+Pillow==10.4.0
+
+# --- System Utilities ---
+# To copy/paste file paths into the upload windows
+pyperclip==1.9.0
