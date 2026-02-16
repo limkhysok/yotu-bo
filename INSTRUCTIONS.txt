@@ -1,0 +1,14 @@
+# 📥 Project: yotu-bo (Vision-Based YT Uploader)
+
+## 📌 Project Overview
+"yotu-bo" is a desktop automation tool built with Python. It uses PyQt6 for the user interface and PyAutoGUI for vision-based automation. The goal is to automate video uploads to YouTube by mimicking human mouse clicks and keyboard inputs, utilizing existing Google Chrome profiles to bypass API quota restrictions.
+
+## 🛠 Required Environment (requirements.txt)
+```text
+PyQt6==6.7.1
+selenium==4.25.0
+webdriver-manager==4.0.2
+pyautogui==0.9.54
+opencv-python==4.10.0.84
+Pillow==10.4.0
+pyperclip==1.9.0
