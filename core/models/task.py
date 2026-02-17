@@ -1,16 +1,16 @@
 from dataclasses import dataclass, field
-import uuid
+
 from datetime import datetime
 
 
 @dataclass
 class Task:
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
-    task_name: str
-    chrome_path: str
-    youtube_url: str
-    video_directory: str
-    post_video: int = 1  # default is 1 video per task
+    task_name: str = ""
+    chrome_path: str = ""
+    youtube_url: str = ""
+    video_directory: str = ""
+    post_video: int = 1
+    id: int = 0
     created_at: str = field(default_factory=lambda: datetime.now().isoformat())
     status: str = "Idle"
 

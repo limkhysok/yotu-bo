@@ -11,15 +11,25 @@ from PyQt6.QtWidgets import (
     QGridLayout,
     QSpinBox,
 )
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, pyqtSignal
 from core.ui.theme import THEME_COLORS
+
+from core.models.task import Task
+from core.services.storage import StorageService
 
 
 class TaskCard(QFrame):
-    def __init__(self, parent=None):
+    # Signals for changes to trigger storage updates
+    changed = pyqtSignal()
+    delete_requested = pyqtSignal()
+
+    def __init__(self, task: Task, parent=None):
         super().__init__(parent)
+        self.task = task
         self.setObjectName("card")
         self.setup_ui()
+        self.load_task_data()
+        self.connect_signals()
 
     def setup_ui(self):
         # Main layout with reduced spacing
@@ -92,6 +102,32 @@ class TaskCard(QFrame):
             }}
         """)
         layout.addWidget(self.start_btn)
+
+    def load_task_data(self):
+        """Set UI values from the Task object."""
+        self.task_name_input.setText(self.task.task_name)
+        self.youtube_url_input.setText(self.task.youtube_url)
+        self.chrome_path_input.setText(self.task.chrome_path)
+        self.video_directory_input.setText(self.task.video_directory)
+        self.post_video_input.setValue(self.task.post_video)
+
+    def connect_signals(self):
+        """Connect UI changes to the 'changed' signal."""
+        self.task_name_input.textChanged.connect(self.on_data_changed)
+        self.youtube_url_input.textChanged.connect(self.on_data_changed)
+        self.chrome_path_input.textChanged.connect(self.on_data_changed)
+        self.video_directory_input.textChanged.connect(self.on_data_changed)
+        self.post_video_input.valueChanged.connect(self.on_data_changed)
+        self.delete_btn.clicked.connect(self.delete_requested.emit)
+
+    def on_data_changed(self):
+        """Update the internal Task object and notify the page."""
+        self.task.task_name = self.task_name_input.text()
+        self.task.youtube_url = self.youtube_url_input.text()
+        self.task.chrome_path = self.chrome_path_input.text()
+        self.task.video_directory = self.video_directory_input.text()
+        self.task.post_video = self.post_video_input.value()
+        self.changed.emit()
 
     def create_compact_input(self, grid, row, label_text, placeholder):
         lbl = QLabel(label_text)
@@ -173,12 +209,15 @@ class TaskCard(QFrame):
         path = QFileDialog.getExistingDirectory(self, "Select Directory")
         if path:
             target.setText(path)
+            self.changed.emit()
 
 
 class TaskPage(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.storage = StorageService()
         self.setup_ui()
+        self.load_existing_tasks()
 
     def setup_ui(self):
         main_layout = QVBoxLayout(self)
@@ -205,7 +244,7 @@ class TaskPage(QWidget):
                 background-color: {THEME_COLORS["DARK_RED"]};
             }}
         """)
-        self.create_btn.clicked.connect(self.add_task_card)
+        self.create_btn.clicked.connect(self.on_create_clicked)
 
         header_container.addWidget(header)
         header_container.addStretch()
@@ -223,17 +262,51 @@ class TaskPage(QWidget):
         self.tasks_layout = QVBoxLayout(self.scroll_content)
         self.tasks_layout.setContentsMargins(0, 0, 5, 0)
         self.tasks_layout.setSpacing(12)
-        self.tasks_layout.addStretch()  # Push everything up
 
         self.scroll.setWidget(self.scroll_content)
         main_layout.addWidget(self.scroll)
 
-    def add_task_card(self):
-        card = TaskCard()
+        self.tasks_layout.addStretch()  # Push everything up
+
+    def load_existing_tasks(self):
+        """Fetch all tasks from storage and display their cards."""
+        tasks = self.storage.load_tasks()
+        for t in tasks:
+            self.add_task_card(t)
+
+    def on_create_clicked(self):
+        """Create a new task with a sequential ID."""
+        tasks = self.storage.load_tasks()
+        next_id = 1
+        if tasks:
+            next_id = max(t.id for t in tasks) + 1
+
+        new_task = Task(task_name=f"Task {next_id}", id=next_id)
+        self.storage.add_task(new_task)
+        self.add_task_card(new_task)
+
+    def add_task_card(self, task: Task):
+        """Create and add a TaskCard widget to the layout."""
+        card = TaskCard(task)
+        # Add to layout before the stretch
         self.tasks_layout.insertWidget(self.tasks_layout.count() - 1, card)
-        card.delete_btn.clicked.connect(lambda: self.remove_task_card(card))
+
+        # Connect signals
+        card.changed.connect(self.persist_changes)
+        card.delete_requested.connect(lambda: self.remove_task_card(card))
+
+    def persist_changes(self):
+        """Get all task objects from cards and save them to storage."""
+        all_tasks = []
+        for i in range(self.tasks_layout.count()):
+            widget = self.tasks_layout.itemAt(i).widget()
+            if isinstance(widget, TaskCard):
+                all_tasks.append(widget.task)
+        self.storage.save_tasks(all_tasks)
 
     def remove_task_card(self, card):
+        """Delete task from storage and remove card from UI."""
+        self.storage.delete_task(card.task.id)
         self.tasks_layout.removeWidget(card)
         card.deleteLater()
 
