@@ -14,6 +14,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("YotuBo")
+        self.resize(900, 700)
         self.setup_ui()
 
     def setup_ui(self):
